@@ -1,71 +1,55 @@
 # PotatoCare AI — Potato Leaf Disease Screening Demo
 
-PotatoCare AI is a Flask application that wraps a Vision Transformer (ViT) image classifier for uploaded potato leaf photos. The model predicts one of three labels: **Early blight**, **Late blight**, or **Healthy**.
+PotatoCare AI is a Flask application concept built around a Vision Transformer (ViT) classifier for potato leaf images. The intended model labels are **Early blight**, **Late blight**, and **Healthy**.
+
+> **Repository status:** The current public GitHub repository contains this README only. The application source code, dependency file, trained checkpoint, and notebook are not currently committed here. The setup instructions below describe the local project layout and will become reproducible from GitHub once those files are added.
 
 > **Agricultural disclaimer:** This is an educational screening aid, not a definitive plant-disease diagnosis. Confirm uncertain cases with a qualified agricultural extension specialist.
 
-## Features
+## Intended application features
 
 - Flask web application.
-- Upload and preview potato leaf images.
+- Potato leaf image upload and preview.
 - ViT-based image classification.
 - Three output classes: Early blight, Late blight, and Healthy.
 - Prediction confidence and class-probability display.
 - Friendly handling for missing checkpoints and invalid images.
-- Health endpoint for checking model readiness.
-- Responsive interface with drag-and-drop and browse-to-upload support.
+- Health endpoint and responsive upload interface.
 
 ## Technology
 
-- Python
-- PyTorch and torchvision
-- timm (Vision Transformer)
-- Flask
+- Python, Flask
+- PyTorch, torchvision, timm
 - Pillow
-- HTML, CSS, and JavaScript
+- HTML, CSS, JavaScript
 
-## Model checkpoint
+## Expected local project files
 
-The application expects a checkpoint named `potato_vit.pth` beside `app.py`, unless `POTATO_MODEL_PATH` is configured.
+```text
+potato_disease_flask/
+├── app.py
+├── potato_vit.pth
+├── requirements.txt
+├── templates/
+│   └── index.html
+└── README.md
+```
 
-The checkpoint is expected to contain:
+The local application expects a checkpoint named `potato_vit.pth` beside `app.py`, unless `POTATO_MODEL_PATH` is configured. The checkpoint is expected to contain `model_state_dict` and `classes`, and to match `timm.create_model("vit_base_patch16_224", pretrained=False, num_classes=...)` plus the training preprocessing.
 
-- `model_state_dict`
-- `classes`
+## Setup after adding the application files
 
-The model is reconstructed using `timm.create_model("vit_base_patch16_224", pretrained=False, num_classes=...)`. The checkpoint must match this architecture and the preprocessing used during training.
-
-## Windows setup
+Use a Python version compatible with your installed PyTorch build.
 
 ```powershell
-git clone https://github.com/malikahmad/-PotatoCare-AI-Intelligent-Potato-Disease-Detection.git
-cd -PotatoCare-AI-Intelligent-Potato-Disease-Detection
-
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
-```
-
-If PyTorch installation fails, install a torch/torchvision build compatible with your Python version and hardware using the official PyTorch installation selector.
-
-## Run
-
-```powershell
 python app.py
 ```
 
 Open [http://127.0.0.1:5000](http://127.0.0.1:5000).
-
-Optional environment variables:
-
-| Variable | Purpose |
-|---|---|
-| `POTATO_MODEL_PATH` | Full path to the model checkpoint |
-| `FLASK_SECRET_KEY` | Secret key for Flask deployments |
-| `FLASK_DEBUG` | Set to `0` outside local development |
-| `HOST` | Bind address |
-| `PORT` | Application port |
 
 ## Model evaluation and limitations
 
@@ -78,6 +62,14 @@ Before making stronger claims:
 3. Check for near-duplicate images and leakage across splits.
 4. Report per-class precision, recall, F1-score, and a confusion matrix.
 5. Test photographs collected in real field conditions.
+
+## Next repository steps
+
+- Commit the Flask source code and templates.
+- Add a `requirements.txt` with compatible dependency versions.
+- Add the training notebook or a reproducible training script.
+- Document how to obtain the model checkpoint without committing large or restricted files.
+- Add screenshots of the actual running application.
 
 ## Author
 
